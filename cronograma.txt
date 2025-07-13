@@ -18,17 +18,17 @@ Día 2: Configuración de MySQL y modelos iniciales [COMPLETADO ✓]
     - Configurar admin panel [COMPLETADO ✓]
     - Crear datos iniciales [COMPLETADO ✓]
 
-Día 3: Configuración de Docker básico
-    - Instalar Docker
-    - Aprender conceptos básicos de Docker
-    - Crear primer Dockerfile
-    - Entender Docker Compose
+Día 3: Configuración de Docker básico [COMPLETADO ✓]
+    - Instalar Docker [COMPLETADO ✓]
+    - Aprender conceptos básicos de Docker [COMPLETADO ✓]
+    - Crear primer Dockerfile [COMPLETADO ✓]
+    - Entender Docker Compose [COMPLETADO ✓]
 
-Día 4: Diseño de la base de datos y relaciones
-    - Diseñar esquema de base de datos
-    - Definir relaciones entre tablas
-    - Crear modelos en Django
-    - Realizar primeras migraciones
+Día 4: Diseño de la base de datos y relaciones [COMPLETADO ✓]
+    - Diseñar esquema de base de datos [COMPLETADO ✓]
+    - Definir relaciones entre tablas [COMPLETADO ✓]
+    - Crear modelos en Django [COMPLETADO ✓]
+    - Realizar primeras migraciones [COMPLETADO ✓]
 
 Día 5: Implementación de autenticación de usuarios
     - Configurar sistema de autenticación
@@ -134,11 +134,11 @@ Día 5: Implementación de notificaciones
 
 SEMANA 5 - DOCKER Y DESPLIEGUE
 -----------------------------
-Día 1: Dockerización de la aplicación Django
-    - Dockerfile para Django
-    - Configuración de entorno
-    - Variables de ambiente
-    - Pruebas de contenedor
+Día 1: Dockerización de la aplicación Django [COMPLETADO ✓]
+    - Dockerfile para Django [COMPLETADO ✓]
+    - Configuración de entorno [COMPLETADO ✓]
+    - Variables de ambiente [COMPLETADO ✓]
+    - Pruebas de contenedor [COMPLETADO ✓]
 
 Día 2: Dockerización de React
     - Dockerfile para React
@@ -146,11 +146,11 @@ Día 2: Dockerización de React
     - Configuración de producción
     - Pruebas de contenedor
 
-Día 3: Docker Compose para desarrollo
-    - Archivo docker-compose.yml
-    - Configuración de servicios
-    - Redes y volúmenes
-    - Pruebas locales
+Día 3: Docker Compose para desarrollo [COMPLETADO ✓]
+    - Archivo docker-compose.yml [COMPLETADO ✓]
+    - Configuración de servicios [COMPLETADO ✓]
+    - Redes y volúmenes [COMPLETADO ✓]
+    - Pruebas locales [COMPLETADO ✓]
 
 Día 4: Configuración de producción
     - Configuración de servidor

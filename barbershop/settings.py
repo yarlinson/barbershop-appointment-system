@@ -90,7 +90,7 @@ DATABASES = {
         'NAME': 'barbershop_db',
         'USER': 'newuser',
         'PASSWORD': '+newuser+',
-        'HOST': 'localhost',
+        'HOST': 'db',  # Cambiado de 'localhost' a 'db' para Docker
         'PORT': '3306',
     }
 }
