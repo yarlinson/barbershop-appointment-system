@@ -1,0 +1,197 @@
+CRONOGRAMA DE DESARROLLO - SISTEMA DE CITAS PARA BARBERÍA
+=======================================================
+
+SEMANA 1 - CONFIGURACIÓN INICIAL
+-------------------------------
+Día 1: Configuración del entorno Django y estructura del proyecto [COMPLETADO ✓]
+    - Crear entorno virtual Python [COMPLETADO ✓]
+    - Instalar Django y dependencias necesarias [COMPLETADO ✓]
+    - Crear estructura básica del proyecto [COMPLETADO ✓]
+    - Configurar settings.py inicial [COMPLETADO ✓]
+
+Día 2: Configuración de MySQL y modelos iniciales [COMPLETADO ✓]
+    - Instalar y configurar MySQL [COMPLETADO ✓]
+    - Crear base de datos [COMPLETADO ✓]
+    - Configurar conexión Django-MySQL [COMPLETADO ✓]
+    - Diseñar modelos iniciales [COMPLETADO ✓]
+    - Crear modelos en Django [COMPLETADO ✓]
+    - Configurar admin panel [COMPLETADO ✓]
+    - Crear datos iniciales [COMPLETADO ✓]
+
+Día 3: Configuración de Docker básico
+    - Instalar Docker
+    - Aprender conceptos básicos de Docker
+    - Crear primer Dockerfile
+    - Entender Docker Compose
+
+Día 4: Diseño de la base de datos y relaciones
+    - Diseñar esquema de base de datos
+    - Definir relaciones entre tablas
+    - Crear modelos en Django
+    - Realizar primeras migraciones
+
+Día 5: Implementación de autenticación de usuarios
+    - Configurar sistema de autenticación
+    - Crear modelos de usuarios (Cliente, Barbero, Admin)
+    - Implementar registro y login
+    - Configurar permisos básicos
+
+SEMANA 2 - DESARROLLO BACKEND
+----------------------------
+Día 1: API para gestión de barberos
+    - Crear CRUD de barberos
+    - Implementar endpoints para perfil
+    - Gestión de horarios de barberos
+    - Documentación de API
+
+Día 2: API para gestión de servicios
+    - CRUD de servicios
+    - Gestión de precios
+    - Categorías de servicios
+    - Tiempo estimado por servicio
+
+Día 3: API para gestión de horarios
+    - Sistema de horarios disponibles
+    - Manejo de días laborables
+    - Configuración de intervalos de tiempo
+    - Validaciones de disponibilidad
+
+Día 4: API para sistema de citas
+    - Crear/modificar/cancelar citas
+    - Validaciones de horarios
+    - Sistema de confirmación
+    - Manejo de estados de citas
+
+Día 5: Implementación de validaciones y reglas de negocio
+    - Validaciones de horarios superpuestos
+    - Reglas de cancelación
+    - Notificaciones básicas
+    - Pruebas de endpoints
+
+SEMANA 3 - FRONTEND BÁSICO (REACT)
+---------------------------------
+Día 1: Configuración inicial de React y estructura
+    - Crear proyecto React
+    - Configurar rutas
+    - Establecer estructura de componentes
+    - Configurar estado global
+
+Día 2: Componentes de login y registro
+    - Formularios de registro
+    - Sistema de login
+    - Validaciones de formularios
+    - Manejo de sesiones
+
+Día 3: Componentes para lista de servicios
+    - Vista de servicios disponibles
+    - Filtros y búsqueda
+    - Detalles de servicios
+    - Precios y duraciones
+
+Día 4: Componentes para lista de barberos
+    - Perfiles de barberos
+    - Disponibilidad
+    - Especialidades
+    - Calificaciones
+
+Día 5: Implementación del calendario básico
+    - Componente de calendario
+    - Selección de fechas
+    - Vista de disponibilidad
+    - Interacción básica
+
+SEMANA 4 - FRONTEND AVANZADO
+---------------------------
+Día 1: Sistema de reserva de citas
+    - Flujo de reserva
+    - Selección de servicios
+    - Selección de barbero
+    - Confirmación de cita
+
+Día 2: Panel de administración
+    - Dashboard administrativo
+    - Gestión de usuarios
+    - Reportes básicos
+    - Configuraciones generales
+
+Día 3: Panel de barbero
+    - Vista de citas del día
+    - Gestión de disponibilidad
+    - Historial de servicios
+    - Perfil personal
+
+Día 4: Panel de cliente
+    - Historial de citas
+    - Gestión de perfil
+    - Favoritos
+    - Reseñas y calificaciones
+
+Día 5: Implementación de notificaciones
+    - Sistema de notificaciones
+    - Recordatorios
+    - Confirmaciones
+    - Alertas del sistema
+
+SEMANA 5 - DOCKER Y DESPLIEGUE
+-----------------------------
+Día 1: Dockerización de la aplicación Django
+    - Dockerfile para Django
+    - Configuración de entorno
+    - Variables de ambiente
+    - Pruebas de contenedor
+
+Día 2: Dockerización de React
+    - Dockerfile para React
+    - Optimización de build
+    - Configuración de producción
+    - Pruebas de contenedor
+
+Día 3: Docker Compose para desarrollo
+    - Archivo docker-compose.yml
+    - Configuración de servicios
+    - Redes y volúmenes
+    - Pruebas locales
+
+Día 4: Configuración de producción
+    - Configuración de servidor
+    - Seguridad
+    - SSL/HTTPS
+    - Respaldos
+
+Día 5: Pruebas finales y documentación
+    - Pruebas de integración
+    - Documentación técnica
+    - Manual de usuario
+    - Manual de despliegue
+
+SEMANA 6 - PRUEBAS Y OPTIMIZACIÓN
+--------------------------------
+Día 1: Pruebas unitarias backend
+    - Tests de modelos
+    - Tests de APIs
+    - Tests de validaciones
+    - Cobertura de código
+
+Día 2: Pruebas de integración
+    - Tests end-to-end
+    - Pruebas de flujos completos
+    - Escenarios de error
+    - Documentación de pruebas
+
+Día 3: Pruebas de frontend
+    - Tests de componentes
+    - Tests de integración
+    - Tests de UI/UX
+    - Pruebas de responsividad
+
+Día 4: Optimización de rendimiento
+    - Optimización de consultas
+    - Caché
+    - Lazy loading
+    - Compresión de assets
+
+Día 5: Corrección de bugs y mejoras finales
+    - Corrección de errores
+    - Mejoras de UX
+    - Optimizaciones finales
+    - Preparación para lanzamiento 
