@@ -9,6 +9,9 @@ app_name = 'appointments'
 router = DefaultRouter()
 router.register(r'barbers', views.BarberViewSet, basename='barber')
 router.register(r'services', views.ServiceViewSet, basename='service')
+router.register(r'schedules', views.ScheduleViewSet, basename='schedule')
+router.register(r'schedule-exceptions', views.ScheduleExceptionViewSet, basename='schedule-exception')
+router.register(r'appointments', views.AppointmentViewSet, basename='appointment')
 
 urlpatterns = [
     # Autenticación

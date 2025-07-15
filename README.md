@@ -264,6 +264,101 @@ Authorization: Bearer <token>
 - `DELETE /api/services/{id}/` - Eliminar servicio (solo admin)
 - `PATCH /api/services/{id}/toggle_active/` - Activar/desactivar servicio (solo admin)
 
+#### Gestión de Horarios
+- `GET /api/schedules/` - Listar todos los horarios
+- `GET /api/schedules/{id}/` - Ver detalle de horario
+- `GET /api/schedules/{id}/?date=2024-03-20&duration=30` - Ver slots disponibles para una fecha
+- `POST /api/schedules/` - Crear nuevo horario
+```json
+{
+    "barber": 1,
+    "day_of_week": 0,
+    "start_time": "09:00:00",
+    "end_time": "17:00:00",
+    "interval_minutes": 30,
+    "break_start_time": "13:00:00",
+    "break_end_time": "14:00:00",
+    "is_active": true
+}
+```
+- `PUT /api/schedules/{id}/` - Actualizar horario
+- `DELETE /api/schedules/{id}/` - Eliminar horario
+
+#### Gestión de Excepciones de Horario
+- `GET /api/schedule-exceptions/` - Listar todas las excepciones
+- `GET /api/schedule-exceptions/{id}/` - Ver detalle de excepción
+- `GET /api/schedule-exceptions/upcoming/` - Ver excepciones próximas (30 días)
+- `POST /api/schedule-exceptions/` - Crear nueva excepción
+```json
+{
+    "barber": 1,
+    "date": "2024-03-25",
+    "exception_type": "holiday",
+    "description": "Día festivo",
+    "is_active": true
+}
+```
+- `PUT /api/schedule-exceptions/{id}/` - Actualizar excepción
+- `DELETE /api/schedule-exceptions/{id}/` - Eliminar excepción
+
+#### Gestión de Citas
+- `GET /api/appointments/` - Listar citas (filtradas según el rol del usuario)
+- `GET /api/appointments/{id}/` - Ver detalle de cita
+- `GET /api/appointments/upcoming/` - Ver próximas citas (30 días)
+- `GET /api/appointments/today/` - Ver citas del día
+- `POST /api/appointments/` - Crear nueva cita
+```json
+{
+    "barber": 1,
+    "service": 1,
+    "date": "2024-03-20",
+    "start_time": "10:00:00",
+    "notes": "Notas adicionales"
+}
+```
+- `PATCH /api/appointments/{id}/change_status/` - Cambiar estado de cita
+```json
+{
+    "status": "confirmed"  // pending, confirmed, cancelled, completed
+}
+```
+- `DELETE /api/appointments/{id}/` - Cancelar cita (solo admin o cliente si está pendiente)
+
+### Reglas de Negocio
+
+#### Citas
+1. **Creación de Citas**
+   - No se pueden crear citas para fechas pasadas
+   - El barbero debe tener horario disponible para ese día
+   - La hora debe estar dentro del horario del barbero
+   - No debe haber superposición con otras citas
+   - No debe haber excepciones para esa fecha/hora
+
+2. **Estados de Citas**
+   - Transiciones permitidas:
+     * pending → confirmed, cancelled
+     * confirmed → completed, cancelled
+     * cancelled → (estado final)
+     * completed → (estado final)
+
+3. **Permisos**
+   - Clientes: ver y crear citas, cancelar sus citas pendientes
+   - Barberos: ver sus citas, actualizar estados
+   - Administradores: acceso completo
+
+#### Horarios
+1. **Configuración**
+   - Intervalos mínimos de 15 minutos
+   - Intervalos máximos de 120 minutos
+   - Periodo de descanso opcional
+   - No superposición de horarios por barbero
+
+2. **Excepciones**
+   - Días festivos
+   - Vacaciones
+   - Ausencias personales
+   - No se pueden crear excepciones para fechas pasadas
+
 ### Roles y Permisos
 
 1. **Admin**

@@ -50,23 +50,23 @@ Día 2: API para gestión de servicios [COMPLETADO ✓]
     - Categorías de servicios [COMPLETADO ✓]
     - Tiempo estimado por servicio [COMPLETADO ✓]
 
-Día 3: API para gestión de horarios
-    - Sistema de horarios disponibles
-    - Manejo de días laborables
-    - Configuración de intervalos de tiempo
-    - Validaciones de disponibilidad
+Día 3: API para gestión de horarios [COMPLETADO ✓]
+    - Sistema de horarios disponibles [COMPLETADO ✓]
+    - Manejo de días laborables [COMPLETADO ✓]
+    - Configuración de intervalos de tiempo [COMPLETADO ✓]
+    - Validaciones de disponibilidad [COMPLETADO ✓]
 
-Día 4: API para sistema de citas
-    - Crear/modificar/cancelar citas
-    - Validaciones de horarios
-    - Sistema de confirmación
-    - Manejo de estados de citas
+Día 4: API para sistema de citas [COMPLETADO ✓]
+    - Crear/modificar/cancelar citas [COMPLETADO ✓]
+    - Validaciones de horarios [COMPLETADO ✓]
+    - Sistema de confirmación [COMPLETADO ✓]
+    - Manejo de estados de citas [COMPLETADO ✓]
 
-Día 5: Implementación de validaciones y reglas de negocio
-    - Validaciones de horarios superpuestos
-    - Reglas de cancelación
-    - Notificaciones básicas
-    - Pruebas de endpoints
+Día 5: Implementación de validaciones y reglas de negocio [COMPLETADO ✓]
+    - Validaciones de horarios superpuestos [COMPLETADO ✓]
+    - Reglas de cancelación [COMPLETADO ✓]
+    - Notificaciones básicas [COMPLETADO ✓]
+    - Pruebas de endpoints [COMPLETADO ✓]
 
 SEMANA 3 - FRONTEND BÁSICO (REACT)
 ---------------------------------

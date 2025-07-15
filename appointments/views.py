@@ -5,11 +5,14 @@ from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 from rest_framework_simplejwt.views import TokenObtainPairView
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
+from django.utils import timezone
+from datetime import datetime, timedelta
 from .serializers import (
     UserSerializer, CustomTokenObtainPairSerializer,
-    BarberSerializer, ScheduleSerializer, ServiceSerializer
+    BarberSerializer, ScheduleSerializer, ServiceSerializer,
+    ScheduleExceptionSerializer, AppointmentSerializer
 )
-from .models import Schedule, Service
+from .models import Schedule, Service, ScheduleException, Appointment
 
 User = get_user_model()
 
@@ -146,4 +149,249 @@ class ServiceViewSet(viewsets.ModelViewSet):
         service.is_active = not service.is_active
         service.save()
         serializer = self.get_serializer(service)
+        return Response(serializer.data)
+
+class ScheduleViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet para la gestión de horarios.
+    """
+    serializer_class = ScheduleSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        """
+        Filtrar horarios:
+        - Administradores ven todos los horarios
+        - Barberos ven solo sus horarios
+        - Clientes ven solo horarios activos
+        """
+        queryset = Schedule.objects.all()
+        
+        if self.request.user.is_staff:
+            return queryset
+        elif self.request.user.role == 'barber':
+            return queryset.filter(barber=self.request.user)
+        else:
+            return queryset.filter(is_active=True)
+
+    def get_permissions(self):
+        """
+        - Lista y detalle: cualquier usuario autenticado
+        - Crear, actualizar, eliminar: solo administradores y barberos para sus propios horarios
+        """
+        if self.action in ['create', 'update', 'partial_update', 'destroy']:
+            self.permission_classes = [IsAuthenticated]
+        return super().get_permissions()
+
+    def perform_create(self, serializer):
+        """
+        Si el usuario es un barbero, asignar el horario a sí mismo
+        """
+        if self.request.user.role == 'barber':
+            serializer.save(barber=self.request.user)
+        else:
+            serializer.save()
+
+    def check_object_permissions(self, request, obj):
+        """
+        Verificar que los barberos solo puedan modificar sus propios horarios
+        """
+        super().check_object_permissions(request, obj)
+        if request.user.role == 'barber' and obj.barber != request.user:
+            self.permission_denied(
+                request,
+                message="No tienes permiso para modificar los horarios de otros barberos"
+            )
+
+class ScheduleExceptionViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet para la gestión de excepciones de horarios.
+    """
+    serializer_class = ScheduleExceptionSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        """
+        Filtrar excepciones:
+        - Administradores ven todas las excepciones
+        - Barberos ven solo sus excepciones
+        - Clientes ven solo excepciones activas y futuras
+        """
+        queryset = ScheduleException.objects.all()
+        
+        if self.request.user.is_staff:
+            return queryset
+        elif self.request.user.role == 'barber':
+            return queryset.filter(barber=self.request.user)
+        else:
+            return queryset.filter(
+                is_active=True,
+                date__gte=timezone.now().date()
+            )
+
+    def get_permissions(self):
+        """
+        - Lista y detalle: cualquier usuario autenticado
+        - Crear, actualizar, eliminar: solo administradores y barberos para sus propias excepciones
+        """
+        if self.action in ['create', 'update', 'partial_update', 'destroy']:
+            self.permission_classes = [IsAuthenticated]
+        return super().get_permissions()
+
+    def perform_create(self, serializer):
+        """
+        Si el usuario es un barbero, asignar la excepción a sí mismo
+        """
+        if self.request.user.role == 'barber':
+            serializer.save(barber=self.request.user)
+        else:
+            serializer.save()
+
+    def check_object_permissions(self, request, obj):
+        """
+        Verificar que los barberos solo puedan modificar sus propias excepciones
+        """
+        super().check_object_permissions(request, obj)
+        if request.user.role == 'barber' and obj.barber != request.user:
+            self.permission_denied(
+                request,
+                message="No tienes permiso para modificar las excepciones de otros barberos"
+            )
+
+    @action(detail=False, methods=['get'])
+    def upcoming(self, request):
+        """
+        Obtener excepciones próximas (próximos 30 días)
+        """
+        start_date = timezone.now().date()
+        end_date = start_date + timedelta(days=30)
+        
+        exceptions = self.get_queryset().filter(
+            date__range=[start_date, end_date],
+            is_active=True
+        )
+        
+        serializer = self.get_serializer(exceptions, many=True)
+        return Response(serializer.data)
+
+class AppointmentViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet para la gestión de citas.
+    """
+    serializer_class = AppointmentSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        """
+        Filtrar citas según el rol del usuario:
+        - Administradores ven todas las citas
+        - Barberos ven sus citas
+        - Clientes ven sus propias citas
+        """
+        queryset = Appointment.objects.all()
+        
+        if self.request.user.is_staff:
+            return queryset
+        elif self.request.user.role == 'barber':
+            return queryset.filter(barber=self.request.user)
+        else:
+            return queryset.filter(client=self.request.user)
+
+    def get_permissions(self):
+        """
+        - Crear: cualquier usuario autenticado
+        - Ver detalle: cliente de la cita, barbero asignado o admin
+        - Actualizar estado: barbero asignado o admin
+        - Eliminar: admin o cliente (si está pendiente)
+        """
+        if self.action in ['update', 'partial_update', 'destroy']:
+            self.permission_classes = [IsAuthenticated]
+        return super().get_permissions()
+
+    def check_object_permissions(self, request, obj):
+        """
+        Verificar permisos específicos para cada acción
+        """
+        super().check_object_permissions(request, obj)
+        
+        # Solo el cliente, el barbero asignado o admin pueden ver el detalle
+        if self.action == 'retrieve':
+            if not (request.user.is_staff or 
+                   request.user == obj.client or 
+                   request.user == obj.barber):
+                self.permission_denied(request, message="No tienes permiso para ver esta cita")
+        
+        # Solo el barbero asignado o admin pueden actualizar el estado
+        elif self.action in ['update', 'partial_update']:
+            if not (request.user.is_staff or request.user == obj.barber):
+                self.permission_denied(request, message="No tienes permiso para actualizar esta cita")
+        
+        # Solo el admin o el cliente pueden cancelar (si está pendiente)
+        elif self.action == 'destroy':
+            if not (request.user.is_staff or 
+                   (request.user == obj.client and obj.status == 'pending')):
+                self.permission_denied(request, message="No tienes permiso para cancelar esta cita")
+
+    @action(detail=True, methods=['patch'])
+    def change_status(self, request, pk=None):
+        """
+        Cambiar el estado de una cita
+        """
+        appointment = self.get_object()
+        new_status = request.data.get('status')
+        
+        if new_status not in dict(Appointment.STATUS_CHOICES):
+            return Response(
+                {"detail": "Estado no válido"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+            
+        # Validar transiciones de estado permitidas
+        valid_transitions = {
+            'pending': ['confirmed', 'cancelled'],
+            'confirmed': ['completed', 'cancelled'],
+            'cancelled': [],
+            'completed': []
+        }
+        
+        if new_status not in valid_transitions[appointment.status]:
+            return Response(
+                {"detail": f"No se puede cambiar de {appointment.status} a {new_status}"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+            
+        appointment.status = new_status
+        appointment.save()
+        serializer = self.get_serializer(appointment)
+        return Response(serializer.data)
+
+    @action(detail=False, methods=['get'])
+    def upcoming(self, request):
+        """
+        Obtener las próximas citas (próximos 30 días)
+        """
+        start_date = timezone.now().date()
+        end_date = start_date + timedelta(days=30)
+        
+        appointments = self.get_queryset().filter(
+            date__range=[start_date, end_date],
+            status__in=['pending', 'confirmed']
+        )
+        
+        serializer = self.get_serializer(appointments, many=True)
+        return Response(serializer.data)
+
+    @action(detail=False, methods=['get'])
+    def today(self, request):
+        """
+        Obtener las citas del día
+        """
+        today = timezone.now().date()
+        
+        appointments = self.get_queryset().filter(
+            date=today,
+            status__in=['pending', 'confirmed']
+        )
+        
+        serializer = self.get_serializer(appointments, many=True)
         return Response(serializer.data)
