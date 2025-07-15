@@ -7,9 +7,9 @@ from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 from .serializers import (
     UserSerializer, CustomTokenObtainPairSerializer,
-    BarberSerializer, ScheduleSerializer
+    BarberSerializer, ScheduleSerializer, ServiceSerializer
 )
-from .models import Schedule
+from .models import Schedule, Service
 
 User = get_user_model()
 
@@ -108,3 +108,42 @@ class BarberViewSet(viewsets.ModelViewSet):
         elif request.method == 'DELETE':
             schedule.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
+
+class ServiceViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet para la gestión de servicios.
+    Proporciona operaciones CRUD para los servicios de la barbería.
+    """
+    queryset = Service.objects.all()
+    serializer_class = ServiceSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        """
+        Filtrar servicios activos para usuarios normales,
+        mostrar todos los servicios para administradores
+        """
+        if self.request.user.is_staff:
+            return Service.objects.all()
+        return Service.objects.filter(is_active=True)
+
+    def get_permissions(self):
+        """
+        Asignar permisos según la acción:
+        - Lista y detalle: cualquier usuario autenticado
+        - Crear, actualizar, eliminar: solo administradores
+        """
+        if self.action in ['create', 'update', 'partial_update', 'destroy']:
+            self.permission_classes = [IsAdminUser]
+        return super().get_permissions()
+
+    @action(detail=True, methods=['patch'])
+    def toggle_active(self, request, pk=None):
+        """
+        Activar/desactivar un servicio
+        """
+        service = self.get_object()
+        service.is_active = not service.is_active
+        service.save()
+        serializer = self.get_serializer(service)
+        return Response(serializer.data)

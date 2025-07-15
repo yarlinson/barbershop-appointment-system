@@ -44,11 +44,11 @@ Día 1: API para gestión de barberos [COMPLETADO ✓]
     - Gestión de horarios de barberos [COMPLETADO ✓]
     - Documentación de API [COMPLETADO ✓]
 
-Día 2: API para gestión de servicios
-    - CRUD de servicios
-    - Gestión de precios
-    - Categorías de servicios
-    - Tiempo estimado por servicio
+Día 2: API para gestión de servicios [COMPLETADO ✓]
+    - CRUD de servicios [COMPLETADO ✓]
+    - Gestión de precios [COMPLETADO ✓]
+    - Categorías de servicios [COMPLETADO ✓]
+    - Tiempo estimado por servicio [COMPLETADO ✓]
 
 Día 3: API para gestión de horarios
     - Sistema de horarios disponibles

@@ -247,6 +247,23 @@ Authorization: Bearer <token>
 ```
 - `DELETE /api/barbers/{id}/schedule/?schedule_id=1` - Eliminar horario
 
+#### Gestión de Servicios
+- `GET /api/services/` - Listar todos los servicios
+- `GET /api/services/{id}/` - Ver detalles de un servicio
+- `POST /api/services/` - Crear nuevo servicio (solo admin)
+```json
+{
+    "name": "Corte de Cabello Clásico",
+    "description": "Corte de cabello tradicional con tijeras y máquina",
+    "price": "25.00",
+    "duration": "00:30:00",
+    "is_active": true
+}
+```
+- `PUT /api/services/{id}/` - Actualizar servicio (solo admin)
+- `DELETE /api/services/{id}/` - Eliminar servicio (solo admin)
+- `PATCH /api/services/{id}/toggle_active/` - Activar/desactivar servicio (solo admin)
+
 ### Roles y Permisos
 
 1. **Admin**

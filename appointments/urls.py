@@ -8,6 +8,7 @@ app_name = 'appointments'
 # Crear router para ViewSets
 router = DefaultRouter()
 router.register(r'barbers', views.BarberViewSet, basename='barber')
+router.register(r'services', views.ServiceViewSet, basename='service')
 
 urlpatterns = [
     # Autenticación

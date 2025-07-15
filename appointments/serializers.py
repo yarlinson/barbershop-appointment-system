@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from .models import Schedule
+from .models import Schedule, Service
 
 User = get_user_model()
 
@@ -85,4 +85,50 @@ class BarberSerializer(serializers.ModelSerializer):
     def validate(self, data):
         if self.instance and self.instance.role != 'barber':
             raise serializers.ValidationError("Este usuario no es un barbero")
-        return data 
+        return data
+
+class ServiceSerializer(serializers.ModelSerializer):
+    duration_display = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Service
+        fields = (
+            'id', 'name', 'description', 'price', 'duration',
+            'duration_display', 'image', 'is_active',
+            'created_at', 'updated_at'
+        )
+        read_only_fields = ('created_at', 'updated_at')
+
+    def get_duration_display(self, obj):
+        """
+        Convierte la duración a un formato más legible
+        """
+        minutes = obj.duration.total_seconds() / 60
+        hours = int(minutes // 60)
+        remaining_minutes = int(minutes % 60)
+        
+        if hours > 0 and remaining_minutes > 0:
+            return f"{hours}h {remaining_minutes}min"
+        elif hours > 0:
+            return f"{hours}h"
+        else:
+            return f"{remaining_minutes}min"
+
+    def validate_price(self, value):
+        """
+        Validar que el precio sea positivo
+        """
+        if value <= 0:
+            raise serializers.ValidationError("El precio debe ser mayor que 0")
+        return value
+
+    def validate_duration(self, value):
+        """
+        Validar que la duración sea positiva y no exceda las 4 horas
+        """
+        minutes = value.total_seconds() / 60
+        if minutes <= 0:
+            raise serializers.ValidationError("La duración debe ser positiva")
+        if minutes > 240:  # 4 horas
+            raise serializers.ValidationError("La duración no puede exceder las 4 horas")
+        return value 
