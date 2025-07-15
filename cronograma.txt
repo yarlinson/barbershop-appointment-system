@@ -30,19 +30,19 @@ Día 4: Diseño de la base de datos y relaciones [COMPLETADO ✓]
     - Crear modelos en Django [COMPLETADO ✓]
     - Realizar primeras migraciones [COMPLETADO ✓]
 
-Día 5: Implementación de autenticación de usuarios
-    - Configurar sistema de autenticación
-    - Crear modelos de usuarios (Cliente, Barbero, Admin)
-    - Implementar registro y login
-    - Configurar permisos básicos
+Día 5: Implementación de autenticación de usuarios [COMPLETADO ✓]
+    - Configurar sistema de autenticación [COMPLETADO ✓]
+    - Crear modelos de usuarios (Cliente, Barbero, Admin) [COMPLETADO ✓]
+    - Implementar registro y login [COMPLETADO ✓]
+    - Configurar permisos básicos [COMPLETADO ✓]
 
 SEMANA 2 - DESARROLLO BACKEND
 ----------------------------
-Día 1: API para gestión de barberos
-    - Crear CRUD de barberos
-    - Implementar endpoints para perfil
-    - Gestión de horarios de barberos
-    - Documentación de API
+Día 1: API para gestión de barberos [COMPLETADO ✓]
+    - Crear CRUD de barberos [COMPLETADO ✓]
+    - Implementar endpoints para perfil [COMPLETADO ✓]
+    - Gestión de horarios de barberos [COMPLETADO ✓]
+    - Documentación de API [COMPLETADO ✓]
 
 Día 2: API para gestión de servicios
     - CRUD de servicios

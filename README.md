@@ -198,10 +198,69 @@ Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE.md](LICENSE.m
 
 ## ✒️ Autor
 
-* **Tu Nombre** - *Desarrollo Completo* - [Tu Usuario de GitHub]
+* **Yarlinson Tiberio Barranco Bastilla** - *Desarrollo Completo* - [yarlinson]
 
 ## 🎁 Agradecimientos
 
-* Comparte este proyecto con otros 📢
-* Invita una cerveza 🍺 o un café ☕ a alguien del equipo
-* Da las gracias públicamente 🤓 
+## 📚 Documentación de la API
+
+### Autenticación
+
+Todos los endpoints requieren autenticación JWT. Incluir el token en el header:
+```
+Authorization: Bearer <token>
+```
+
+### Endpoints
+
+#### Autenticación
+- `POST /api/auth/register/` - Registro de usuarios
+- `POST /api/auth/login/` - Inicio de sesión
+- `POST /api/auth/login/refresh/` - Refrescar token
+- `GET /api/auth/profile/` - Ver perfil
+- `PUT /api/auth/profile/update/` - Actualizar perfil
+
+#### Gestión de Barberos
+- `GET /api/barbers/` - Listar todos los barberos
+- `GET /api/barbers/{id}/` - Ver detalles de un barbero
+- `POST /api/barbers/` - Crear nuevo barbero (solo admin)
+- `PUT /api/barbers/{id}/` - Actualizar barbero (solo admin)
+- `DELETE /api/barbers/{id}/` - Eliminar barbero (solo admin)
+
+#### Horarios de Barberos
+- `GET /api/barbers/{id}/schedules/` - Ver horarios de un barbero
+- `POST /api/barbers/{id}/schedules/` - Agregar horario
+```json
+{
+    "day_of_week": 0,
+    "start_time": "09:00:00",
+    "end_time": "17:00:00"
+}
+```
+- `PUT /api/barbers/{id}/schedule/` - Actualizar horario
+```json
+{
+    "schedule_id": 1,
+    "start_time": "10:00:00",
+    "end_time": "18:00:00"
+}
+```
+- `DELETE /api/barbers/{id}/schedule/?schedule_id=1` - Eliminar horario
+
+### Roles y Permisos
+
+1. **Admin**
+   - Acceso total a todas las operaciones
+   - Puede crear, modificar y eliminar barberos
+   - Gestión completa de horarios
+
+2. **Barbero**
+   - Ver su propio perfil y horarios
+   - Gestionar sus horarios
+   - Ver lista de citas
+
+3. **Cliente**
+   - Ver lista de barberos y horarios
+   - Ver perfil de barberos
+   - Agendar citas
+
