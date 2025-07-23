@@ -68,6 +68,11 @@ Este sistema permite a los clientes agendar citas con sus barberos preferidos, g
    docker-compose exec web python manage.py createsuperuser
    ```
 
+5. **Asignar rol de administrador al superusuario**
+   ```bash
+   docker-compose exec web python manage.py shell -c "from appointments.models import User; user = User.objects.get(username='TU_USUARIO'); user.role = 'admin'; user.save()"
+   ```
+
 La aplicación estará disponible en:
 - Frontend: http://localhost:8000
 - Panel Admin: http://localhost:8000/admin
@@ -118,7 +123,12 @@ La aplicación estará disponible en:
    python manage.py createsuperuser
    ```
 
-8. **Iniciar el servidor de desarrollo**
+8. **Asignar rol de administrador al superusuario**
+   ```bash
+   python manage.py shell -c "from appointments.models import User; user = User.objects.get(username='TU_USUARIO'); user.role = 'admin'; user.save()"
+   ```
+
+9. **Iniciar el servidor de desarrollo**
    ```bash
    python manage.py runserver
    ```

@@ -70,17 +70,18 @@ Día 5: Implementación de validaciones y reglas de negocio [COMPLETADO ✓]
 
 SEMANA 3 - FRONTEND BÁSICO (REACT)
 ---------------------------------
-Día 1: Configuración inicial de React y estructura
-    - Crear proyecto React
-    - Configurar rutas
-    - Establecer estructura de componentes
-    - Configurar estado global
+Día 1: Configuración inicial de React y estructura [COMPLETADO ✓]
+    - Crear proyecto React con Vite y TypeScript [COMPLETADO ✓]
+    - Configurar rutas con React Router [COMPLETADO ✓]
+    - Establecer estructura de componentes [COMPLETADO ✓]
+    - Configurar estado global con Redux [COMPLETADO ✓]
 
-Día 2: Componentes de login y registro
-    - Formularios de registro
-    - Sistema de login
-    - Validaciones de formularios
-    - Manejo de sesiones
+Día 2: Componentes de login y registro [EN PROGRESO ⚡]
+    - Formularios de registro [COMPLETADO ✓]
+    - Sistema de login con JWT [COMPLETADO ✓]
+    - Validaciones de formularios [COMPLETADO ✓]
+    - Manejo de sesiones con Redux [COMPLETADO ✓]
+    - Protección de rutas 
 
 Día 3: Componentes para lista de servicios
     - Vista de servicios disponibles

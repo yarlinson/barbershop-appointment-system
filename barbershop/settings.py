@@ -61,6 +61,12 @@ MIDDLEWARE = [
 CORS_ALLOW_ALL_ORIGINS = True  # Solo para desarrollo
 CORS_ALLOW_CREDENTIALS = True
 
+# For production, specify allowed origins:
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:5173",
+#     "http://127.0.0.1:5173",
+# ]
+
 ROOT_URLCONF = 'barbershop.urls'
 
 TEMPLATES = [
