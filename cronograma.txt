@@ -76,7 +76,7 @@ Día 1: Configuración inicial de React y estructura [COMPLETADO ✓]
     - Establecer estructura de componentes [COMPLETADO ✓]
     - Configurar estado global con Redux [COMPLETADO ✓]
 
-Día 2: Componentes de login y registro [EN PROGRESO ⚡]
+Día 2: Componentes de login y registro [COMPLETADO ✓]
     - Formularios de registro [COMPLETADO ✓]
     - Sistema de login con JWT [COMPLETADO ✓]
     - Validaciones de formularios [COMPLETADO ✓]
